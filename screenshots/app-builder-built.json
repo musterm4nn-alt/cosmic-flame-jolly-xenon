@@ -1,0 +1,38 @@
+{
+  "url": "http://127.0.0.1:8081/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "x-code",
+      "hasCanvas": false,
+      "bodyTextLen": 457,
+      "bodyTextHash": "516247601dbc5ab400dd5e7a933884c6084b017e80f3af7ad58b37902eaf231b",
+      "bodyTextPrefix": "x-code first run · no API key WELCOME GROK CLI OAUTH HIDDEN AGEN",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "x-code",
+      "hasCanvas": false,
+      "bodyTextLen": 457,
+      "bodyTextHash": "516247601dbc5ab400dd5e7a933884c6084b017e80f3af7ad58b37902eaf231b",
+      "bodyTextPrefix": "x-code first run · no API key WELCOME GROK CLI OAUTH HIDDEN AGEN",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-built.json",
+  "divergesFromBaseline": false,
+  "baselineReasons": []
+}

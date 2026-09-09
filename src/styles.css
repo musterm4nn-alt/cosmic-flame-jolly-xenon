@@ -1,0 +1,330 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  --color-bg: #1a1714;
+  --color-desktop: #16131a;
+  --color-surface: #1c1a20;
+  --color-surface-2: #26232b;
+  --color-surface-3: #322f38;
+  --color-fg: #f6f4f0;
+  --color-muted: #c4c1ba;
+  --color-subtle: #8e8b86;
+  --color-border: rgb(255 255 255 / 0.2);
+  --color-border-strong: rgb(255 255 255 / 0.38);
+  --color-lift: rgb(255 255 255 / 0.12);
+  --color-accent: #f2eee6;
+  --color-accent-fg: #1a1714;
+  --color-accent-hover: #ffffff;
+  --color-ring: rgb(255 255 255 / 0.5);
+  --color-danger: #e08b86;
+  --color-ok: #9dba8c;
+  --color-warn: #d4b07a;
+  --color-glow-warm: #e8b48a;
+  --color-glow-cool: #8eafd0;
+
+  --font-sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "Cascadia Mono", ui-monospace, monospace;
+
+  --text-micro: 0.625rem;
+  --text-2xs: 0.6875rem;
+
+  --radius-xs: 0.5rem;
+  --radius-sm: 0.75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.35rem;
+  --radius-xl: 1.85rem;
+  --radius-window: 1.85rem;
+
+  --shadow-window:
+    0 0 0 0.5px rgb(255 255 255 / 0.28),
+    0 1px 0 rgb(255 255 255 / 0.18),
+    0 28px 80px -16px rgb(0 0 0 / 0.55),
+    0 8px 24px -8px rgb(0 0 0 / 0.4);
+
+  --glass-filter: blur(42px) saturate(1.9) brightness(1.12);
+  --glass-filter-thin: blur(22px) saturate(1.7) brightness(1.08);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html,
+  body,
+  #app {
+    min-height: 100%;
+    background: var(--color-desktop);
+    color: var(--color-fg);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-accent) 35%, transparent);
+    color: var(--color-fg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .desktop-glass {
+    --lx: 18%;
+    --ly: 10%;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background-color: var(--color-desktop);
+  }
+
+  .desktop-orbs {
+    position: absolute;
+    inset: -18%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 58% 48% at 14% 6%, color-mix(in oklab, var(--color-glow-warm) 78%, white), transparent 58%),
+      radial-gradient(ellipse 52% 46% at 92% 16%, color-mix(in oklab, var(--color-glow-cool) 72%, white), transparent 60%),
+      radial-gradient(ellipse 46% 40% at 72% 96%, color-mix(in oklab, var(--color-glow-warm) 42%, var(--color-glow-cool)), transparent 58%),
+      radial-gradient(ellipse 36% 32% at 38% 58%, rgb(255 255 255 / 0.22), transparent 62%);
+    filter: blur(12px);
+    animation: orb-drift 26s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .desktop-grain {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.18;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    mix-blend-mode: overlay;
+  }
+
+  .glass-window,
+  .glass-panel,
+  .glass-bar,
+  .glass-well,
+  .glass-chip {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .glass-window {
+    background:
+      linear-gradient(
+        180deg,
+        rgb(255 255 255 / 0.2) 0%,
+        rgb(255 255 255 / 0.08) 28%,
+        rgb(16 14 18 / 0.42) 70%,
+        rgb(12 10 14 / 0.55) 100%
+      );
+    backdrop-filter: var(--glass-filter);
+    -webkit-backdrop-filter: var(--glass-filter);
+    box-shadow: var(--shadow-window);
+  }
+
+  .glass-window::before,
+  .glass-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+    background: radial-gradient(
+      48% 36% at var(--lx, 18%) var(--ly, 10%),
+      rgb(255 255 255 / 0.34),
+      transparent 64%
+    );
+    opacity: 0.7;
+  }
+
+  .glass-window::after,
+  .glass-panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+    padding: 1.5px;
+    background: linear-gradient(
+      165deg,
+      rgb(255 255 255 / 0.78) 0%,
+      rgb(255 255 255 / 0.18) 26%,
+      rgb(255 255 255 / 0.05) 52%,
+      rgb(255 255 255 / 0.32) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    box-shadow:
+      inset 0 1.5px 0 rgb(255 255 255 / 0.55),
+      inset 0 -1px 0 rgb(255 255 255 / 0.08);
+  }
+
+  .glass-panel > *,
+  .glass-window > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .glass-panel {
+    background: linear-gradient(
+      180deg,
+      rgb(255 255 255 / 0.2),
+      rgb(255 255 255 / 0.07) 55%,
+      rgb(255 255 255 / 0.04)
+    );
+    backdrop-filter: var(--glass-filter-thin);
+    -webkit-backdrop-filter: var(--glass-filter-thin);
+    box-shadow:
+      0 0 0 0.5px rgb(255 255 255 / 0.22),
+      0 18px 40px -24px rgb(0 0 0 / 0.5),
+      inset 0 1px 0 rgb(255 255 255 / 0.4);
+  }
+
+  .glass-bar {
+    background: rgb(255 255 255 / 0.06);
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    box-shadow:
+      inset 0 -0.5px 0 rgb(255 255 255 / 0.14),
+      inset 0 1px 0 rgb(255 255 255 / 0.22);
+  }
+
+  .glass-well {
+    background: rgb(0 0 0 / 0.28);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.08),
+      0 0 0 0.5px rgb(255 255 255 / 0.1);
+  }
+
+  .glass-chip {
+    background: rgb(255 255 255 / 0.12);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.42),
+      inset 0 -1px 0 rgb(255 255 255 / 0.06),
+      0 0 0 0.5px rgb(255 255 255 / 0.16);
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-window {
+    background: rgb(28 24 30 / 0.96);
+  }
+  .glass-panel {
+    background: rgb(38 34 42 / 0.96);
+  }
+  .glass-bar {
+    background: rgb(30 28 34 / 0.96);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass-window {
+    background: rgb(24 22 26 / 0.96);
+    backdrop-filter: none;
+  }
+  .glass-panel,
+  .glass-bar {
+    background: rgb(32 30 36 / 0.96);
+    backdrop-filter: none;
+  }
+  .desktop-orbs {
+    opacity: 0.35;
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .desktop-orbs {
+    animation: none;
+    will-change: auto;
+  }
+}
+
+@keyframes orb-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  40% {
+    transform: translate3d(3.5%, -2.5%, 0) scale(1.06);
+  }
+  70% {
+    transform: translate3d(-2.5%, 3%, 0) scale(0.97);
+  }
+}
+
+@keyframes xcode-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.xcode-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--color-fg) 28%, transparent) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: xcode-shimmer 1.6s linear infinite;
+}
+
+@keyframes xcode-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.xcode-enter {
+  animation: xcode-enter 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
